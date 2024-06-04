@@ -6,19 +6,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "some title",
-      home: Scaffold(
-          appBar: AppBar(
-            title: const Center(
-              child: Text("welcome to flutter"),
-            ),
-            backgroundColor: Colors.pink,
-          ),
-          body: const Center(
-            child: RandomWords(),
-          )),
-    );
+    return const MaterialApp(title: "some title", home: RandomWords());
   }
 }
 
@@ -32,28 +20,51 @@ class RandomWords extends StatefulWidget {
 }
 
 class _RandomWordsState extends State<RandomWords> {
-  final wordPair = WordPair.random();
-  String _words = 'init';
-  int _count = 0;
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [Text('$_count'), Text(_words)],
-      )),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _changeWords,
-        child: const Icon(Icons.sip),
+  final _suggestion = <WordPair>[];
+  final _biggerFont = const TextStyle(fontSize: 10);
+  final _saved = Set<WordPair>();
+
+  Widget _buildSuggestions() {
+    return ListView.builder(itemBuilder: (context, i) {
+      if (i.isOdd) return const Divider();
+      final index = i ~/ 2;
+      if (index >= _suggestion.length) {
+        _suggestion.addAll(generateWordPairs().take(10));
+      }
+      return _buildRow(_suggestion[index]);
+    });
+  }
+
+  Widget _buildRow(WordPair suggestion) {
+    final alreadySaved = _saved.contains(suggestion);
+    return ListTile(
+      title: Text(
+        suggestion.asPascalCase,
+        style: _biggerFont,
       ),
+      trailing: Icon(
+        alreadySaved ? Icons.favorite : Icons.favorite_border,
+        color: alreadySaved ? Colors.red : null,
+      ),
+      onTap: () {
+        setState(() {
+          if (alreadySaved) {
+            _saved.remove(suggestion);
+          } else {
+            _saved.add(suggestion);
+          }
+        });
+      },
     );
   }
 
-  void _changeWords() {
-    setState(() {
-      _words += wordPair.asPascalCase;
-      _count++;
-    });
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("ListView"),
+      ),
+      body: _buildSuggestions(),
+    );
   }
 }
