@@ -21,11 +21,12 @@ class TitleSection extends StatelessWidget {
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
-                  Text('Kandersteg, Switzerland', style: TextStyle(color: Colors.grey[500])),
+                  Text('Kandersteg, Switzerland',
+                      style: TextStyle(color: Colors.grey[500])),
                 ],
               ),
             ),
-            FavrioteIcon()
+            const FavrioteIcon()
           ],
         ));
   }

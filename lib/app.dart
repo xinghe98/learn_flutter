@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myapp/commponts/button.dart';
 import 'package:myapp/commponts/text_section.dart';
 import 'package:myapp/commponts/titles_section.dart';
+import 'package:myapp/views/test_router.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -14,7 +15,11 @@ class HomePage extends StatelessWidget {
         title: const Center(child: Text("hello")),
       ),
       body: ListView(
-        children: const [TitleSection(), ButtonColum(), TextSection()],
+        children: const [
+          TitleSection(),
+          ButtonColum(),
+          TextSection(),
+        ],
       ),
     );
   }
@@ -26,9 +31,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: "st",
-        home: const HomePage(),
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(primarySwatch: Colors.blue));
+      // home: HomePage(),
+      initialRoute: "/",
+      routes: {
+        "/": (context) => const HomePage(),
+        "newrouter": (context) => const TestRouter()
+      },
+      debugShowCheckedModeBanner: false,
+      title: "str",
+    );
   }
 }

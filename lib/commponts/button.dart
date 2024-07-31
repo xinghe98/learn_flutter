@@ -5,29 +5,34 @@ class ButtonColum extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Column buildButtomColum(IconData icon, String label) {
+    buildButtomColum(IconData icon, String label, String routelabel,
+        {String? arguments}) {
       Color color = Theme.of(context).primaryColor;
-      return Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, color: color),
-          Container(
-              margin: const EdgeInsets.only(top: 10),
-              child: Text(
-                label,
-                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-              ))
-        ],
-      );
+      return GestureDetector(
+          onTap: () =>
+              Navigator.pushNamed(context, routelabel, arguments: arguments),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon, color: color),
+              Container(
+                  margin: const EdgeInsets.only(top: 10),
+                  child: Text(
+                    label,
+                    style: const TextStyle(
+                        fontSize: 14, fontWeight: FontWeight.w600),
+                  ))
+            ],
+          ));
     }
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        buildButtomColum(Icons.call, "CALL"),
-        buildButtomColum(Icons.near_me, "ROUTE"),
-        buildButtomColum(Icons.share, 'SHARE')
+        buildButtomColum(Icons.call, "CALL", "newrouter", arguments: "hihihi"),
+        buildButtomColum(Icons.near_me, "ROUTE", "/"),
+        buildButtomColum(Icons.share, 'SHARE', "/")
       ],
     );
   }
