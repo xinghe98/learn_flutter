@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/commponts/button.dart';
-import 'package:myapp/commponts/text_section.dart';
-import 'package:myapp/commponts/titles_section.dart';
 import 'package:myapp/views/test_router.dart';
 
 class HomePage extends StatelessWidget {
@@ -9,19 +6,41 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController unameCo = TextEditingController();
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.deepPurple,
-        title: const Center(child: Text("hello")),
-      ),
-      body: ListView(
-        children: const [
-          TitleSection(),
-          ButtonColum(),
-          TextSection(),
-        ],
-      ),
-    );
+        appBar: AppBar(
+          backgroundColor: Colors.deepPurple,
+          title: const Center(child: Text("hello")),
+        ),
+        body: Column(
+          children: [
+            TextField(
+              autofocus: true,
+              controller: unameCo,
+              onChanged: (v) {},
+              decoration: const InputDecoration(
+                  labelText: "username",
+                  hintText: "users",
+                  prefixIcon: Icon(Icons.person)),
+            ),
+            const TextField(
+              autofocus: true,
+              obscureText: true,
+              decoration: InputDecoration(
+                  labelText: "passwd",
+                  hintText: "password",
+                  prefixIcon: Icon(Icons.lock)),
+            )
+          ],
+        )
+        // body: ListView(
+        //   children: [
+        //     const TitleSection(),
+        //     const ButtonColum(),
+        //     const TextSection(),
+        //   ],
+        // ),
+        );
   }
 }
 
